@@ -39,7 +39,7 @@
 class Student:
 
     __MIN = 1
-    __MAX = 5
+    __MAX = 10
 
     def __init__(self, school_name):
 
