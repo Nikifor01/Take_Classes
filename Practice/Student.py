@@ -56,23 +56,23 @@ class Student:
         pass
 
     def add_group(self, name):
-        pass
+        self.__school[name] = {}
 
     def del_group(self, name):
-        pass
+        del self.__school[name]
 
-    def add_student(self, name):
-        pass
+    def add_student(self, group, name):
+        self.__school[group][name] = []
 
-    def del_student(self, name):
-        pass
+    def del_student(self, group, name):
+        del self.__school[group][name]
 
     #  -1 это прогулы
-    def add_mark(self, name):
-        pass
+    def add_mark(self, group, name, mark):
+        self.__school[group][name].append(mark)
 
-    def del_mark(self, name):
-        pass
+    def del_mark(self, group, name, mark):
+        self.__school[group][name].remove(mark)
 
     def avg_marks_stud(self, name):
         pass
@@ -109,4 +109,5 @@ class Student:
 
 
 s = Student('Group_1')
+s.add_group('Group_2')
 print(s.__dict__)
