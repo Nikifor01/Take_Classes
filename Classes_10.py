@@ -12,7 +12,7 @@ value –
 '''
 
 class Integer:
-    def __set_name(self, owner, name):
+    def __set_name__(self, owner, name):
         self.name = '_' + name
 
     def __get__(self, instance, owner):

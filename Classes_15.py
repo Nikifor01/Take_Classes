@@ -20,3 +20,5 @@ p1 = Point(1, 2)
 p2 = Point(1, 2)
 
 print(hash(p1), hash(p2), sep='\n')
+
+

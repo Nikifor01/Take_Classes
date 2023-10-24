@@ -3,6 +3,7 @@
 функции здесь помогают сделать итерируемыми экземпляры класса
 '''
 
+
 class FRange:
 
     def __init__(self, start=0.0, stop=0.0, step=1.0):
@@ -22,6 +23,7 @@ class FRange:
         else:
             raise StopIteration
 
+
 class FRange2D:
     def __init__(self, start=0.0, stop=0.0, step=1.0, rows=5):
         self.rows = rows
@@ -36,18 +38,19 @@ class FRange2D:
             self.value += 1
             return iter(self.fr)
 
+
 fr = FRange(1, 2, 0.5)
-#print(fr.__next__())
-#print(fr.__next__())
-#print(fr.__next__())
+# print(fr.__next__())
+# print(fr.__next__())
+# print(fr.__next__())
 print(next(fr))
 print(next(fr))
 print(next(fr))
 
-#for x in fr:
-    #print(x)
+# for x in fr:
+# print(x)
 
-fr2 = FRange2D(0,2,0.5, 4)
+fr2 = FRange2D(0, 2, 0.5, 4)
 for row in fr2:
     for x in row:
         print(x, end=' ')

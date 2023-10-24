@@ -2,11 +2,13 @@ class Student:
     """
     Класс студент нужен для анализа успеваемости учеников с системе оценки образования для школ
 
+
     Данные вводимые в класс:
     ФИО
     Группа
     Оценка
     Отсутвия
+
 
     Операции реализованные в классе:
     Создать группу
@@ -30,10 +32,21 @@ class Student:
     Показать самую успевающую группу
     Показать самую отстающую группу
 
-    создаются списки и уже геттерами и сеттерами если надо добавляем
-    в них
 
-    Иниуиируем класс с первой группы, во всём остальном
+    создать геттеры для просмотра
+
+
+    Иниуиируем класс с первой пустой группы
+
+
+    Проверки:
+    Имя должно состаять из трёх частей и только букв
+    Оценка от одного до пяти включительно
+    Прогул это всегда -1
+    Не допустить деления на ноль
+
+
+
     """
 
     __MIN = 1
@@ -44,14 +57,17 @@ class Student:
         self.__school_name = school_name
         self.__school = {self.__school_name: {}}
 
+    def __call__(self, *args, **kwargs):
+        return print('You are creating new school, group one successfully uploaded')
+
     def __str__(self):
-        pass
+        return f'{self.__class__} : {self.__school}'
+
+    def __repr__(self):
+        return f'{self.__class__} : {self.__school_name}'
 
     def __len__(self):
-        pass
-
-    def __eq__(self, other):
-        pass
+        return len(self.__school)
 
     def add_group(self, name):
         self.__school[name] = {}
@@ -174,82 +190,99 @@ class Student:
 
         return worst_group, min_avg
 
+    # @property
+    # def groups(self):
+    #     return self.__school.keys()
+    #
+    # @groups.setter
+    # def groups(self, name):
+    #     self.__school[name] = {}
+    #
+    # @groups.deleter
+    # def groups(self, name):
+    #     del self.__school[name]
 
 s = Student('Group_1')
-s.add_group('Group_2')
-s.del_group('Group_2')
-print(s.__dict__)
+s()
+len(s)
 
-s.add_student('Group_1', 'Oleg Vitalievich Tch')
-s.add_student('Group_1', 'Olga Vitalievna Tch')
-print(s.__dict__)
+print(s)
 
-s.add_mark('Group_1', 'Oleg Vitalievich Tch', 5)
-s.add_mark('Group_1', 'Oleg Vitalievich Tch', 2)
-s.add_mark('Group_1', 'Olga Vitalievna Tch', 5)
-s.add_mark('Group_1', 'Olga Vitalievna Tch', 4)
-s.add_mark('Group_1', 'Olga Vitalievna Tch', 3)
-print(s.__dict__)
-
-print(s.avg_marks_stud('Group_1', 'Oleg Vitalievich Tch'))
-print(s.avg_marks_group('Group_1'))
-print(s.avg_marks_group('Group_1', 'total'))
-s.add_group('Group_2')
-s.add_group('Group_3')
-print(s.__dict__)
-
-s.add_student('Group_1', 'Alice Vitalievich Tch')
-s.add_student('Group_2', 'Mike Vitalievich Tch')
-s.add_student('Group_3', 'Lera Vitalievna Tch')
-s.add_student('Group_3', 'Anna Vitalievna Tch')
-s.add_student('Group_2', 'Olga Vitalievna Th')
-
-s.add_mark('Group_1', 'Alice Vitalievich Tch', 4)
-s.add_mark('Group_2', 'Mike Vitalievich Tch', 3)
-s.add_mark('Group_3', 'Lera Vitalievna Tch', 3)
-s.add_mark('Group_3', 'Anna Vitalievna Tch', 5)
-s.add_mark('Group_2', 'Olga Vitalievna Th', 2)
-s.add_mark('Group_1', 'Alice Vitalievich Tch', 3)
-s.add_mark('Group_2', 'Mike Vitalievich Tch', 2)
-s.add_mark('Group_3', 'Lera Vitalievna Tch', 1)
-s.add_mark('Group_3', 'Anna Vitalievna Tch', 5)
-s.add_mark('Group_2', 'Olga Vitalievna Th', 4)
-s.add_mark('Group_1', 'Alice Vitalievich Tch', 5)
-s.add_mark('Group_2', 'Mike Vitalievich Tch', 4)
-s.add_mark('Group_3', 'Lera Vitalievna Tch', 3)
-s.add_mark('Group_3', 'Anna Vitalievna Tch', 2)
-s.add_mark('Group_2', 'Olga Vitalievna Th', 1)
-print(s.__dict__)
-
-print(s.avg_marks_school())
-
-print(s.group_list('Group_3'))
-
-print(s.group_len('Group_3'))
-
-print(s.school_list())
-
-print(s.school_len())
-
-s.add_mark('Group_1', 'Oleg Vitalievich Tch', -1)
-s.add_mark('Group_1', 'Oleg Vitalievich Tch', -1)
-s.add_mark('Group_1', 'Olga Vitalievna Tch', -1)
-s.add_mark('Group_1', 'Olga Vitalievna Tch', -1)
-s.add_mark('Group_1', 'Olga Vitalievna Tch', -1)
-s.add_mark('Group_3', 'Anna Vitalievna Tch', -1)
-print(s.__dict__)
-
-print(s.absence_student('Group_1', 'Olga Vitalievna Tch'))
-print(s.__dict__)
-
-print(s.absence_group('Group_3'))
-
-print(s.absence_school())
-
-print(s.successful_group())
-
-print(s.avg_marks_group('Group_1'))
-print(s.avg_marks_group('Group_2'))
-print(s.avg_marks_group('Group_3'))
-
-print(s.unsuccessful_group())
+# s.add_group('Group_2')
+# s.del_group('Group_2')
+# print(s.__dict__)
+#
+# s.add_student('Group_1', 'Oleg Vitalievich Tch')
+# s.add_student('Group_1', 'Olga Vitalievna Tch')
+# print(s.__dict__)
+#
+# s.add_mark('Group_1', 'Oleg Vitalievich Tch', 5)
+# s.add_mark('Group_1', 'Oleg Vitalievich Tch', 2)
+# s.add_mark('Group_1', 'Olga Vitalievna Tch', 5)
+# s.add_mark('Group_1', 'Olga Vitalievna Tch', 4)
+# s.add_mark('Group_1', 'Olga Vitalievna Tch', 3)
+# print(s.__dict__)
+#
+# print(s.avg_marks_stud('Group_1', 'Oleg Vitalievich Tch'))
+# print(s.avg_marks_group('Group_1'))
+# print(s.avg_marks_group('Group_1', 'total'))
+# s.add_group('Group_2')
+# s.add_group('Group_3')
+# print(s.__dict__)
+#
+# s.add_student('Group_1', 'Alice Vitalievich Tch')
+# s.add_student('Group_2', 'Mike Vitalievich Tch')
+# s.add_student('Group_3', 'Lera Vitalievna Tch')
+# s.add_student('Group_3', 'Anna Vitalievna Tch')
+# s.add_student('Group_2', 'Olga Vitalievna Th')
+#
+# s.add_mark('Group_1', 'Alice Vitalievich Tch', 4)
+# s.add_mark('Group_2', 'Mike Vitalievich Tch', 3)
+# s.add_mark('Group_3', 'Lera Vitalievna Tch', 3)
+# s.add_mark('Group_3', 'Anna Vitalievna Tch', 5)
+# s.add_mark('Group_2', 'Olga Vitalievna Th', 2)
+# s.add_mark('Group_1', 'Alice Vitalievich Tch', 3)
+# s.add_mark('Group_2', 'Mike Vitalievich Tch', 2)
+# s.add_mark('Group_3', 'Lera Vitalievna Tch', 1)
+# s.add_mark('Group_3', 'Anna Vitalievna Tch', 5)
+# s.add_mark('Group_2', 'Olga Vitalievna Th', 4)
+# s.add_mark('Group_1', 'Alice Vitalievich Tch', 5)
+# s.add_mark('Group_2', 'Mike Vitalievich Tch', 4)
+# s.add_mark('Group_3', 'Lera Vitalievna Tch', 3)
+# s.add_mark('Group_3', 'Anna Vitalievna Tch', 2)
+# s.add_mark('Group_2', 'Olga Vitalievna Th', 1)
+# print(s.__dict__)
+#
+# print(s.avg_marks_school())
+#
+# print(s.group_list('Group_3'))
+#
+# print(s.group_len('Group_3'))
+#
+# print(s.school_list())
+#
+# print(s.school_len())
+#
+# s.add_mark('Group_1', 'Oleg Vitalievich Tch', -1)
+# s.add_mark('Group_1', 'Oleg Vitalievich Tch', -1)
+# s.add_mark('Group_1', 'Olga Vitalievna Tch', -1)
+# s.add_mark('Group_1', 'Olga Vitalievna Tch', -1)
+# s.add_mark('Group_1', 'Olga Vitalievna Tch', -1)
+# s.add_mark('Group_3', 'Anna Vitalievna Tch', -1)
+# print(s.__dict__)
+#
+# print(s.absence_student('Group_1', 'Olga Vitalievna Tch'))
+# print(s.__dict__)
+#
+# print(s.absence_group('Group_3'))
+#
+# print(s.absence_school())
+#
+# print(s.successful_group())
+#
+# print(s.avg_marks_group('Group_1'))
+# print(s.avg_marks_group('Group_2'))
+# print(s.avg_marks_group('Group_3'))
+#
+# print(s.unsuccessful_group())
+#
