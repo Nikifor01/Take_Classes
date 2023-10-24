@@ -52,10 +52,11 @@ class Student:
     __MIN = 1
     __MAX = 5
 
-    def __init__(self, school_name):
+    def __init__(self, school_name, group):
 
         self.__school_name = school_name
-        self.__school = {self.__school_name: {}}
+        self.__group = group
+        self.__school = {self.__group: {}}
 
     def __call__(self, *args, **kwargs):
         return print('You are creating new school, group one successfully uploaded')
@@ -69,13 +70,35 @@ class Student:
     def __len__(self):
         return len(self.__school)
 
+    def __eq__(self, other):
+        return len(self.__school) == len(other.__school)
+
+    def __lt__(self, other):
+        return len(self.__school) < len(other.__school)
+
+    def __gt__(self, other):
+        return len(self.__school) > len(other.__school)
+
+    def __le__(self, other):
+        return len(self.__school) <= len(other.__school)
+
+    def __ge__(self, other):
+        return len(self.__school) >= len(other.__school)
+
+    def __hash__(self):
+        return hash((self.__school_name, self.__group))
+
     def add_group(self, name):
+        if not self._group_valid(name):
+            raise ValueError('It must be text')
         self.__school[name] = {}
 
     def del_group(self, name):
         del self.__school[name]
 
     def add_student(self, group, name):
+        if not self._name_valid(name):
+            raise ValueError('It must be full name like in ID')
         self.__school[group][name] = []
 
     def del_student(self, group, name):
@@ -83,7 +106,10 @@ class Student:
 
     #  -1 это прогулы
     def add_mark(self, group, name, mark):
-        self.__school[group][name].append(mark)
+        if self.__marks_valid(mark):
+            self.__school[group][name].append(mark)
+        else:
+            raise ValueError('It ,ust be from 1 to 5 or -1 for absence')
 
     def del_mark(self, group, name, mark):
         self.__school[group][name].remove(mark)
@@ -94,15 +120,18 @@ class Student:
     def avg_marks_group(self, group, avg_type='each'):
         marks = 0
         #  НАУЧИТЬ СОПРОТИВЛЯТЬСЯ НОЛЯМ
-        if avg_type == 'each':
-            for i in self.__school[group].values():
-                marks += sum(i) / len(i)
+        if self.__school[group].values() != 0:
+            if avg_type == 'each':
+                for i in self.__school[group].values():
+                    marks += sum(i) / len(i)
 
-            return marks / len(self.__school[group])
+                return marks / len(self.__school[group])
 
-        elif avg_type == 'total':
-            return sum([a for c in self.__school[group].values() for a in c]) / len(
-                [a for c in self.__school[group].values() for a in c])
+            elif avg_type == 'total':
+                return sum([a for c in self.__school[group].values() for a in c]) / len(
+                    [a for c in self.__school[group].values() for a in c])
+        else:
+            raise ZeroDivisionError
 
     def avg_marks_school(self, avg_type='total'):
         #  НАУЧИТЬ СОПРОТИВЛЯТЬСЯ НОЛЯМ
@@ -113,7 +142,10 @@ class Student:
                 for j in i.values():
                     a.extend(j)
 
-            return sum(a) / len(a)
+            if len(a) != 0:
+                return sum(a) / len(a)
+            else:
+                raise ZeroDivisionError
 
     def absence_student(self, group, name):
         count = 0
@@ -190,6 +222,19 @@ class Student:
 
         return worst_group, min_avg
 
+    @classmethod
+    def __marks_valid(cls, mark):
+        return (cls.__MIN <= mark <= cls.__MAX) or (mark == -1)
+
+    @staticmethod
+    def _group_valid(name):
+        return isinstance(name, str)
+
+    @staticmethod
+    def _name_valid(name):
+        return len(name.split()) == 3 and (isinstance(name, str))
+
+
     # @property
     # def groups(self):
     #     return self.__school.keys()
@@ -202,11 +247,44 @@ class Student:
     # def groups(self, name):
     #     del self.__school[name]
 
-s = Student('Group_1')
-s()
-len(s)
 
-print(s)
+s = Student('School_1', 'Group_1')
+s1 = Student('School_2', 'Group_1')
+
+s1.add_group('Group_2')
+
+print(s1.__dict__)
+
+s1.add_student('Group_1', 'O O O')
+print(s1.__dict__)
+print(s1.avg_marks_school())
+s1.add_mark('Group_1', 'O O O', 3)
+s1.add_mark('Group_1', 'O O O', -1)
+print(s1.__dict__)
+
+print(s1.avg_marks_group('Group_1'))
+print(s1.avg_marks_school())
+
+# s1.add_student('Group_1', 'O O')
+# print(s1.__dict__)
+
+# s1.add_mark('Group_1', 'O O O', 6)
+# print(s1.__dict__)
+
+# print(s == s1)
+# print(s > s1)
+# print(s < s1)
+# print(s >= s1)
+# print(s <= s1)
+#
+# print(hash(s), hash(s1), sep='\n')
+# print(s.__dict__)
+# print(s1.__dict__)
+
+
+# s()
+# len(s)
+# print(s)
 
 # s.add_group('Group_2')
 # s.del_group('Group_2')
