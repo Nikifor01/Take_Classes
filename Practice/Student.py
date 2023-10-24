@@ -128,8 +128,13 @@ class Student:
                 return marks / len(self.__school[group])
 
             elif avg_type == 'total':
-                return sum([a for c in self.__school[group].values() for a in c]) / len(
+                val = len(
                     [a for c in self.__school[group].values() for a in c])
+                if val == 0:
+                    raise ZeroDivisionError
+                else:
+                    return sum([a for c in self.__school[group].values() for a in c]) / len(
+                        [a for c in self.__school[group].values() for a in c])
         else:
             raise ZeroDivisionError
 
@@ -234,7 +239,6 @@ class Student:
     def _name_valid(name):
         return len(name.split()) == 3 and (isinstance(name, str))
 
-
     # @property
     # def groups(self):
     #     return self.__school.keys()
@@ -256,13 +260,17 @@ s1.add_group('Group_2')
 print(s1.__dict__)
 
 s1.add_student('Group_1', 'O O O')
+s1.add_student('Group_2', 'O i O')
+
 print(s1.__dict__)
-print(s1.avg_marks_school())
+#print(s1.avg_marks_school())
 s1.add_mark('Group_1', 'O O O', 3)
 s1.add_mark('Group_1', 'O O O', -1)
+s1.add_mark('Group_2', 'O i O', 3)
+s1.add_mark('Group_2', 'O i O', -1)
 print(s1.__dict__)
 
-print(s1.avg_marks_group('Group_1'))
+print(s1.avg_marks_group('Group_1', 'total'))
 print(s1.avg_marks_school())
 
 # s1.add_student('Group_1', 'O O')
@@ -363,4 +371,3 @@ print(s1.avg_marks_school())
 # print(s.avg_marks_group('Group_3'))
 #
 # print(s.unsuccessful_group())
-#
