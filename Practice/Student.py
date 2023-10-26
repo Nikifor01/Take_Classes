@@ -88,6 +88,12 @@ class Student:
     def __hash__(self):
         return hash((self.__school_name, self.__group))
 
+    def __getitem__(self, item):
+        pass
+
+    def __setitem__(self, key, value):
+        pass
+
     def add_group(self, name):
         if not self._group_valid(name):
             raise ValueError('It must be text')
@@ -113,6 +119,9 @@ class Student:
 
     def del_mark(self, group, name, mark):
         self.__school[group][name].remove(mark)
+
+    def get_mark(self, group, name):
+        return self.__school[group][name]
 
     def avg_marks_stud(self, group, name):
         return sum(self.__school[group][name]) / len(self.__school[group][name])
@@ -272,6 +281,9 @@ print(s1.__dict__)
 
 print(s1.avg_marks_group('Group_1', 'total'))
 print(s1.avg_marks_school())
+
+sl = s1.get_mark('Group_1', 'O O O')
+print(sl[0])
 
 # s1.add_student('Group_1', 'O O')
 # print(s1.__dict__)
